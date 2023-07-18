@@ -1,8 +1,9 @@
-import { executeTransaction, saveUserContactBackend } from "./execute";
+import { saveUserContactBackend } from "./smc";
 import styles from "../app/app.css";
-import { connectKeplr, initKeplr, signingClient, smartContract } from "./keplr";
 import { getUserLocal, saveUserLocal, saveWinnerLocal } from "./utils";
 import { GameCoordinator } from "../app/scripts/core/gameCoordinator";
+
+import { users } from "./top20"
 
 export function initCoordinator() {
   console.log("init coordinator: ", GameCoordinator);
@@ -11,19 +12,21 @@ export function initCoordinator() {
 }
 
 export async function loadScoreboard() {
-  let scoreboardAddress = smartContract;
+  /*let scoreboardAddress = smartContract;
   let response = await signingClient.queryContractSmart(scoreboardAddress, {
     ScoreList: {},
   });
 
   console.log("scoreboard response: ", response.scores);
-
+*/
   const responseList = document.getElementById("scoreboard");
   while (responseList.firstChild) {
     responseList.removeChild(responseList.firstChild);
   }
-  // let users = getUserLocal();
-  let users = response.scores;
+
+   //let users = getUserLocal();
+  //let users = response.scores;
+  console.log("scoreboard users: ", users);
   if (users) {
     users.sort((a, b) => b.score - a.score);
     console.log("sorted users:", users);
@@ -53,11 +56,7 @@ export async function loadScoreboard() {
 
 window.onload = async () => {
   initCoordinator();
-  await initKeplr();
+  //await initKeplr();
   loadScoreboard();
   // executeTransaction() // test transaction
-  document.getElementById("test-store").addEventListener("click", function () {
-    const user = { name: "Wotori", address: "archway####", score: 27127 };
-    saveUserContactBackend(user);
-  });
 };

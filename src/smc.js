@@ -1,9 +1,50 @@
-import { saveUserContactBackend } from "./execute";
 import { loadScoreboard } from "./init";
-import { signingClient, smartContract, walletAddress } from "./keplr";
 import { getUserLocal, saveUserLocal } from "./utils";
 
 console.log("init smc module...");
+
+export async function saveUserContactBackend(user) {
+  // TODO: this should work at the backend side
+  console.log("execute transaction");
+/*  const network = {
+    endpoint: "https://rpc.constantine.archway.tech",
+    prefix: "archway",
+  };
+  let encodedString =
+    "Ymx1ciBkb3ZlIHplcm8gbnV0IG9wZW4gYmFjaGVsb3IgdHJ1c3QgcmVwZWF0IGNsaWVudCBkcmlsbCBvcGVyYSB3b3JkIHR5cGUgYnV6eiBidXNpbmVzcyBsZWdlbmQgYWRkcmVzcyBsaWJlcnR5IHByaWRlIGluc3RhbGwgdHJhcCBoYXdrIGNhY3R1cyBzaGFsbG93";
+  const walletMnemonic = atob(encodedString);
+
+  console.log("wallet...");
+  const wallet = await DirectSecp256k1HdWallet.fromMnemonic(walletMnemonic, {
+    prefix: network.prefix,
+  });
+  console.log("wallet created: ", wallet);
+
+  console.log("creating client...");
+  const client = await SigningArchwayClient.connectWithSigner(
+    network.endpoint,
+    wallet
+  );
+
+  console.log("execute transaction with user:", user);
+  const { transactionHash } = await client.execute(
+    walletAddress,
+    smartContract,
+    {
+      AddTopUser: {
+        user: {
+          address: user.address,
+          name: user.name,
+          score: user.score,
+        },
+      },
+    },
+    "auto"
+  );
+  loadScoreboard();
+  console.log("hash:", transactionHash);*/
+}
+
 
 export async function executeStoreWinner(score) {
   console.log("score", score);
@@ -17,7 +58,7 @@ export async function executeStoreWinner(score) {
     address: walletAddress,
     score: score,
   };
-
+/*
   // TODO: add method to check if user beat the record before the smart contract execution
   let storedUsers = getUserLocal(); // TODO: read from smart contract instead of local storage
   if (storedUsers && storedUsers.length == 100) {
@@ -39,12 +80,12 @@ export async function executeStoreWinner(score) {
     // saveUserLocal(storedUsers); // save to local storage for development
     // saveUserContact(userToStore);
     saveUserContactBackend(userToStore);
-  }
+  }*/
 }
 
 export function saveUserContact(user) {
   console.log("save user :", user);
-  signingClient
+  /*signingClient
     .execute(
       walletAddress,
       smartContract,
@@ -65,5 +106,5 @@ export function saveUserContact(user) {
       console.log(
         `execute smart contract\n User ${user.name}: with score: ${user.score}`
       );
-    });
+    });*/
 }

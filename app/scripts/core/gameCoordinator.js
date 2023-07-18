@@ -8,9 +8,7 @@ import { Timer } from "../utilities/timer";
 import { executeStoreWinner } from "../../../src/smc";
 import { loadScoreboard } from "../../../src/init";
 
-import { signingClient, smartContract, walletAddress } from "../../../src/keplr";
 import { getWinnerLocal } from "../../../src/utils";
-import { loadScoreboard } from "../../../src/init";
 
 export class GameCoordinator {
   constructor() {
@@ -25,7 +23,6 @@ export class GameCoordinator {
     this.fruitDisplay = document.getElementById('fruit-display');
     this.mainMenu = document.getElementById('main-menu-container');
     this.gameStartButton = document.getElementById('game-start');
-    this.gameStartButton2 = document.getElementById('logo');
     this.pauseButton = document.getElementById('pause-button');
     this.soundButton = document.getElementById('sound-button');
     this.leftCover = document.getElementById('left-cover');
@@ -107,10 +104,6 @@ export class GameCoordinator {
       'click',
       this.startButtonClick.bind(this),
     );
-    this.gameStartButton2.addEventListener(
-      'click',
-      this.startButtonClick2.bind(this),
-    );
     this.pauseButton.addEventListener('click', this.handlePauseKey.bind(this));
     this.soundButton.addEventListener(
       'click',
@@ -154,53 +147,7 @@ export class GameCoordinator {
     return scale - 1;
   }
 
-  /**
-   * Reveals the game underneath the loading covers and starts gameplay
-   */
   async startButtonClick() {
-    console.log("clicked") // TODO: add execute smart contract here....
-    console.log("loading...")
-    console.log("signing client: ", signingClient, walletAddress)
-
-    const priceForGame = {
-      denom: "aconst",
-      amount: "250000000000000000",
-    }
-
-    if (signingClient){
-      signingClient.execute(
-        walletAddress,
-        smartContract,
-        {"Play": {}},
-        "auto",
-        undefined,
-        [priceForGame],
-      )
-      .then((r) => {
-        console.log("smart contract executed?: ", r)
-        this.leftCover.style.left = '-50%';
-        this.rightCover.style.right = '-50%';
-        this.mainMenu.style.opacity = 0;
-        this.gameStartButton.disabled = true;
-    
-        setTimeout(() => {
-          this.mainMenu.style.visibility = 'hidden';
-        }, 1000);
-    
-        this.reset();
-        if (this.firstGame) {
-          this.firstGame = false;
-          this.init();
-        }
-        this.startGameplay(true);
-      });
-    } else{
-      alert("this is blockchain based arcade, you have to install keplr to be able to play and store result. To play without keplr press the logo. But we will be unble to store you score record")
-    }
-  }
-
-  // free to play
-  async startButtonClick2() {
     console.log("clicked")
     this.leftCover.style.left = '-50%';
     this.rightCover.style.right = '-50%';
