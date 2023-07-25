@@ -1,9 +1,41 @@
 version: '3.8'
+
 services:
-  node-app:
-    build: {}
-    ports:
-      - 3000:1234
+  pacman-ui:
+    build:
+      context: ui
+      dockerfile: Dockerfile
+    image: semhoun/arcade-pacman-ui:${PACMAN_VERSION}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pacman-ui.rule=Host(`${TRAEFIK_HOSTNAME}`)"
+      - "traefik.http.routers.pacman-ui.entryPoints=websecure"
+      - "traefik.http.routers.pacman-ui.tls.certresolver=le-dns"
+      - "traefik.http.services.pacman-ui.loadbalancer.server.port=1234"
     volumes:
-      - ./:/app/
+      - ./ui:/app/
       
+  pacman-api:
+    build:
+      context: api
+      dockerfile: Dockerfile
+    image: semhoun/arcade-pacman-api:${PACMAN_VERSION}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pacman-api.rule=Host(`${TRAEFIK_HOSTNAME}`) && PathPrefix(`/api/`)"
+      - "traefik.http.routers.pacman-api.entryPoints=websecure"
+      - "traefik.http.routers.pacman-api.tls.certresolver=le-dns"
+      - "traefik.http.services.pacman.loadbalancer.server.port=8080"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - NODE_ENV=development
+    volumes:
+      - ./api:/app/
+
+networks:
+  default:
+    external: true
+    name: internal

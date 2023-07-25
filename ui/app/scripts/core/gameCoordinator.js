@@ -8,8 +8,6 @@ import { Timer } from "../utilities/timer";
 import { executeStoreWinner } from "../../../src/smc";
 import { loadScoreboard } from "../../../src/init";
 
-import { getWinnerLocal } from "../../../src/utils";
-
 export class GameCoordinator {
   constructor() {
     this.gameUi = document.getElementById('game-ui');
@@ -885,8 +883,7 @@ export class GameCoordinator {
    * Displays GAME OVER text and displays the menu so players can play again
    */
   async gameOver() {
-    console.log("Execute smart contract, check and set new hight score: ", this.points) // TODO: this should be done
-    await executeStoreWinner(this.points) // TODO: move to server side 
+    await executeStoreWinner(this.points);
     
     new Timer(() => {
       this.displayText(

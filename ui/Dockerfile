@@ -3,7 +3,8 @@ WORKDIR /app
 RUN npm install --save-dev parcel
 
 COPY package.json ./
-RUN npm install
+RUN npm install \
+	&& chown -R 1000:100 /root
 
 COPY . .
 

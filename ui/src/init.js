@@ -1,9 +1,7 @@
-import { saveUserContactBackend } from "./smc";
+import { getScoreboardBackend} from "./smc";
 import styles from "../app/app.css";
-import { getUserLocal, saveUserLocal, saveWinnerLocal } from "./utils";
+import { getUserLocal, saveUserLocal } from "./utils";
 import { GameCoordinator } from "../app/scripts/core/gameCoordinator";
-
-import { users } from "./top20"
 
 export function initCoordinator() {
   console.log("init coordinator: ", GameCoordinator);
@@ -12,39 +10,28 @@ export function initCoordinator() {
 }
 
 export async function loadScoreboard() {
-  /*let scoreboardAddress = smartContract;
-  let response = await signingClient.queryContractSmart(scoreboardAddress, {
-    ScoreList: {},
-  });
-
-  console.log("scoreboard response: ", response.scores);
-*/
   const responseList = document.getElementById("scoreboard");
   while (responseList.firstChild) {
     responseList.removeChild(responseList.firstChild);
   }
 
-   //let users = getUserLocal();
-  //let users = response.scores;
-  console.log("scoreboard users: ", users);
+  let users = getUserLocal();
   if (users) {
     users.sort((a, b) => b.score - a.score);
-    console.log("sorted users:", users);
-    // saveWinnerLocal(users[0]); // localStorage for development without contract
     localStorage.setItem("highScore", users[0].score);
     for (let i = 0; i < users.length; i++) {
-      const userName = users[i].name;
+      const userName = users[i].nickname;
       const score = users[i].score;
-      const address = users[i].address;
+      const address = users[i].email;
       const abbreviatedAddress = `${address.substring(
         0,
         4
       )}...${address.substring(address.length - 3)}`;
       const scoreElements = document.createElement("div");
-      const line = `${(i + 1).toString().padEnd(4, "_")}${userName.padEnd(
+      const line = `${(i + 1).toString().padEnd(4, " ")}${userName.padEnd(
         15,
-        "_"
-      )}${abbreviatedAddress.padEnd(15, "_")}score:${score}`;
+        " "
+      )}${abbreviatedAddress.padEnd(15, " ")}score:${score}`;
       scoreElements.innerHTML = `<p style="margin: 3px">
       ${line}</p>`;
       responseList.appendChild(scoreElements);
@@ -56,7 +43,6 @@ export async function loadScoreboard() {
 
 window.onload = async () => {
   initCoordinator();
-  //await initKeplr();
+  getScoreboardBackend();
   loadScoreboard();
-  // executeTransaction() // test transaction
 };

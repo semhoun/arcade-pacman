@@ -1,4 +1,5 @@
-/node_modules
+ui/node_modules
+api/node_modules
 /.nyc_output
 .cache
 .parcel-cache

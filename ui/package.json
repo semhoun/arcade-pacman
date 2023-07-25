@@ -7,13 +7,20 @@
     "npm": "8.12.1"
   },
   "devDependencies": {
+    "assert": "^2.0.0",
+    "browserify-zlib": "^0.2.0",
     "buffer": "^5.5.0||^6.0.0",
     "events": "^3.1.0",
     "gh-pages": "^5.0.0",
     "http-server": "^14.1.1",
+    "https-browserify": "^1.0.0",
     "parcel": "^2.9.1",
+    "path-browserify": "^1.0.1",
     "process": "^0.11.10",
-    "stream-browserify": "^3.0.0"
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "url": "^0.11.1",
+    "util": "^0.12.5"
   },
   "scripts": {
     "dev": "cp -r ./public ./dist && parcel ./index.html",
@@ -26,6 +33,7 @@
     "deploy": "yarn buildghp && gh-pages -d dist"
   },
   "dependencies": {
-    "@archwayhq/arch3.js": "^0.4.0"
+    "@archwayhq/arch3.js": "^0.4.0",
+    "axios": "^1.4.0"
   }
 }
