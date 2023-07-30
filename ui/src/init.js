@@ -22,16 +22,11 @@ export async function loadScoreboard() {
     for (let i = 0; i < users.length; i++) {
       const userName = users[i].nickname;
       const score = users[i].score;
-      const address = users[i].email;
-      const abbreviatedAddress = `${address.substring(
-        0,
-        4
-      )}...${address.substring(address.length - 3)}`;
       const scoreElements = document.createElement("div");
-      const line = `${(i + 1).toString().padEnd(4, " ")}${userName.padEnd(
-        15,
-        " "
-      )}${abbreviatedAddress.padEnd(15, " ")}score:${score}`;
+      const line = `${(i + 1).toString().padStart(2, " ")}-${userName.padEnd(
+        30,
+        '.'
+      )}score:${score.toString().padStart(8, "_")}`;
       scoreElements.innerHTML = `<p style="margin: 3px">
       ${line}</p>`;
       responseList.appendChild(scoreElements);
@@ -44,5 +39,4 @@ export async function loadScoreboard() {
 window.onload = async () => {
   initCoordinator();
   getScoreboardBackend();
-  loadScoreboard();
 };

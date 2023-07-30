@@ -9,5 +9,5 @@ RUN npm install \
 COPY . .
 
 EXPOSE 8080
-#CMD [ "npm", "run" , "serve"]
-CMD [ "npm", "run" , "dev"]
+CMD [ "npm", "run" , "serve"]
+#CMD [ "npm", "run" , "dev"]

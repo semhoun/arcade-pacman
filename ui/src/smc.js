@@ -7,11 +7,14 @@ console.log("init smc module...");
 export async function getScoreboardBackend() {
   const response = await axios.get('/api/scoreboard/');
   saveUserLocal(response.data);
+
+  // As it asynchronus we reload the scoreboard
+  loadScoreboard();
 }
 
 
 export async function saveUserContactBackend(userScore) {
-  axios.post('/api/scoreboard/', JSON.stringify(userScore), {
+  await axios.post('/api/scoreboard/', JSON.stringify(userScore), {
     headers: {
       'Content-Type': 'application/json'
     }
@@ -35,7 +38,7 @@ export async function executeStoreWinner(score) {
     score: score,
   };
 
-  saveUserContactBackend(userToStore);
+  await saveUserContactBackend(userToStore);
 
   let storedUsers = getUserLocal();
   if (storedUsers && storedUsers.length >= 20) {
@@ -45,11 +48,9 @@ export async function executeStoreWinner(score) {
     if (betterThenLast) {
       console.log("user beat previous record...");
       getScoreboardBackend();
-      loadScoreboard();
     }
   }
   else {
     getScoreboardBackend();
-    loadScoreboard();
   }
 }
