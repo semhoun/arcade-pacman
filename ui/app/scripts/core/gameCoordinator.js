@@ -86,12 +86,32 @@ export class GameCoordinator {
     this.fruitPoints = {
       1: 100,
       2: 300,
-      3: 500,
-      4: 700,
-      5: 1000,
-      6: 2000,
-      7: 3000,
-      8: 5000,
+      3: 300,
+      4: 500,
+      5: 500,
+      6: 700,
+      7: 1000,
+      8: 1000,
+      9: 2000,
+      10: 2000,
+      11: 3000,
+      12: 5000,
+    };
+
+    this.ghostDelay = {
+      1: 8000,
+      2: 7000,
+      3: 6000,
+      4: 6000,
+      5: 5000,
+      6: 5000,
+      7: 4000,
+      8: 4000,
+      9: 3000,
+      10: 3000,
+      11: 2000,
+      12: 2000,
+      13: 1000,
     };
 
     this.mazeArray.forEach((row, rowIndex) => {
@@ -689,7 +709,7 @@ export class GameCoordinator {
    */
   releaseGhost() {
     if (this.idleGhosts.length > 0) {
-      const delay = Math.max((8 - (this.level - 1) * 4) * 1000, 0);
+      const delay = Math.max(this.ghostDelay[this.level] || 0 , 0);
 
       this.endIdleTimer = new Timer(() => {
         this.idleGhosts[0].endIdleMode();
@@ -799,7 +819,6 @@ export class GameCoordinator {
     if (this.points > (this.highScore || 0)) {
       this.highScore = this.points;
       this.highScoreDisplay.innerText = this.points;
-      // localStorage.setItem('highScore', this.highScore); // this not need anymore as we read this data from smart contract
     }
 
     if (this.points >= 10000 && !this.extraLifeGiven) {

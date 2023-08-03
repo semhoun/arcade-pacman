@@ -154,6 +154,3 @@ export class GameEngine {
     this.engineCycle(timestamp);
   }
 }
-
-// removeIf(production)
-// endRemoveIf(production)

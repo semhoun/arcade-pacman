@@ -9,9 +9,14 @@ export class Pickup {
     this.fruitImages = {
       100: 'cherry',
       300: 'strawberry',
+      300: 'strawberry',
+      500: 'orange', // PACMAN_PEACH
       500: 'orange',
       700: 'apple',
+      700: 'apple',
+      1000: 'melon', // PACMAN_GRAPES
       1000: 'melon',
+      2000: 'galaxian',
       2000: 'galaxian',
       3000: 'bell',
       5000: 'key',

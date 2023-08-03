@@ -24,9 +24,9 @@ export async function loadScoreboard() {
       const score = users[i].score;
       const scoreElements = document.createElement("div");
       const line = `${(i + 1).toString().padStart(2, " ")}-${userName.padEnd(
-        30,
+        20,
         '.'
-      )}score:${score.toString().padStart(8, "_")}`;
+      ).slice(0, 20)}.score:${score.toString().padStart(8, "_")}`;
       scoreElements.innerHTML = `<p style="margin: 3px">
       ${line}</p>`;
       responseList.appendChild(scoreElements);
